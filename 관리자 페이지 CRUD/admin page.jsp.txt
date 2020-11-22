@@ -1,0 +1,357 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>관리자 페이지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<style>
+.admin-page{
+	text-align:center;
+	
+}
+.admin-title{
+	font-size:70px;
+	font-weight:bold;
+
+}
+.alluser-items{
+	margin-top:100px;
+	
+	justify-content:center;
+
+}
+.table-2{
+	display:flex;
+	justify-content:center;
+}
+.button-items{
+	margin-top:60px;
+	
+	
+}
+.signup-forms{
+	margin-top:100px;
+	
+	width:700px;
+	margin:0 auto;
+	
+}
+.items{
+	margin-top:60px;
+	
+
+}
+.account-tiltle{
+	font-size:50px;
+	padding-top:20px;
+	font-bold:weight;
+
+}
+
+
+</style>
+</head>
+<body>
+<div class="admin-page">
+<p class="admin-title">관리자 권한페이지입니다.</p>
+<p class="account-tiltle">현재 가입된 회원정보</p>
+<div class="alluser-items">
+<div class="table-2">
+<table border="2">
+<tr><td>ID </td><td>PWD</td><td>MOBILE</td><td>NAME</td><td>EMAIL</td></tr>
+
+</table>
+</div>
+
+
+<div class="signup-forms">
+<div class="items">
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">아이디</span>
+  </div>
+  <input type="text" id="id" name="id" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+ 
+</div>
+
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">비밀번호</span>
+  </div>
+  <input type="password" id="password" name="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+
+
+</div>
+
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">전화번호</span>
+  </div>
+  <input type="text" id="mobile" name="mobile" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">이름</span>
+  </div>
+  <input type="text" id="name" name="name" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">이메일주소</span>
+  </div>
+  <input type="text" id="email" name="email" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+  <input type="hidden" id="check_hidden1" name="check_hidden1">
+ 
+
+
+
+</div>
+<div class="button-items">
+<button type="button" id="insert" name="insert" class="btn btn-primary">회원추가하기</button>
+<button type="button" id="edit" name="edit" class="btn btn-success">회원수정하기</button>
+<button type="button" id="delete" name="delete" class="btn btn-danger">회원정보 제거하기</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script language="javascript">
+
+var nClick=null;
+$(document).ready(function() {
+	$.get('selectAlluser',{},function(data){
+		//json방식//
+		console.log('btnGet2')
+		console.log(data);
+		$.each(data,function(ndx,value){
+			//서블릿에서 써준대로 값을 써준다.//
+			name='<tr><td>'+value['ID']+'</td><td>'+value['PWD']+'</td><td>'+value['MOBILE']+'</td><td>'+value['NAME']+'</td><td>'+value['EMAIL']+'</td></tr>';
+			$('table:eq(0)').append(name);
+			console.log('btnGet3')
+		})
+		
+		
+		
+	},'json');//===>2개이상 타입 은 json 이라한다.//text는 하나//
+	return false;
+});
+
+$(document)
+.on('click','table:eq(0) tr',function(){
+	id=$(this).find('td:eq(0)').text();
+	
+	 $('#id').val(id)
+	
+	
+})
+
+$(document)
+.on('click','table:eq(0) tr',function(){
+	password=$(this).find('td:eq(1)').text();
+	 
+	 $('#password').val(password)
+	
+	
+})
+
+$(document)
+.on('click','table:eq(0) tr',function(){
+	mobile=$(this).find('td:eq(2)').text();
+	 console.log(name)
+	 $('#mobile').val(mobile)
+	
+	
+})
+
+$(document)
+.on('click','table:eq(0) tr',function(){
+	 name=$(this).find('td:eq(3)').text();
+	 console.log(name)
+	 $('#name').val(name)
+	
+	
+})
+
+$(document)
+.on('click','table:eq(0) tr',function(){
+	email=$(this).find('td:eq(4)').text();
+	 console.log(name)
+	 $('#email').val(email)
+	
+	
+})
+
+$(document)
+.on('click','#insert',function(){
+	//===>insert<===//
+	if($('#id').val()==""){
+		alert("아이디란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('#password').val()==""){
+		alert("비밀번호란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($("#mobile").val()==""){
+		alert("모바일번호란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('#name').val()==""){
+		alert("이름란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('email').val()==""){
+		alert("이메일 란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('#id').val()==$('#check_hidden1').val()){
+		alert("아이디가 중복됩니다.")
+		return false
+	}
+	if($.isNumeric($('#name').val())==true){
+		alert("이름란에는 숫자가 들어갈수없습니다.")
+		return false;
+	}
+	if($.isNumeric($('#mobile').val())==false){
+		alert("모바일번호란에는 숫자만 들어갈수 있습니다.")
+		return false;
+	}
+	
+
+	$.ajax({
+		  url:'Signup',//호출될 서블릿의 경로(이름)
+		  method:'get',//데이터 전송방식 get/post
+		  //전송할 데이터(쿼리스트링)//
+		  data:'id='+$('input[name=id]').val()+'&password='+$('input[name=password]').val()+'&mobile='+$('input[name=mobile]').val()+'&name='+$('input[name=name]').val()+'&email='+$('input[name=email]').val(),
+		  dataType:'text',//반환받을 데이터 타입 
+		  beforeSend:function(){},
+		  success:function(txt){//호출 성공해서 완료하면 
+			alert("입력완료되었습니다.");
+		},
+		complete:function(){
+			
+		} 
+		
+	    })
+	    alert("회원을 추가하였습니다.");
+		window.location.reload(true);
+		
+	
+})
+
+
+$(document)
+.on('click','#delete',function(){
+	//유효성검사//
+	//===>insert<===//
+	if($('#id').val()==""){
+		alert("아이디란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('#password').val()==""){
+		alert("비밀번호란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($("#mobile").val()==""){
+		alert("모바일번호란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('#name').val()==""){
+		alert("이름란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('email').val()==""){
+		alert("이메일 란을 공백으로 입력할수없습니다.")
+		return false;
+	}if($('#id').val()==$('#check_hidden1').val()){
+		alert("아이디가 중복됩니다.")
+		return false
+	}
+	if($.isNumeric($('#name').val())==true){
+		alert("이름란에는 숫자가 들어갈수없습니다.")
+		return false;
+	}
+	if($.isNumeric($('#mobile').val())==false){
+		alert("모바일번호란에는 숫자만 들어갈수 있습니다.")
+		return false;
+	}
+	
+	var d2 = confirm("정말 이 회원을 탈퇴시키겠습니까?")
+	if(d2==true){
+		
+		
+	$.ajax({
+		  url:'DeleteUser',//호출될 서블릿의 경로(이름)
+		  method:'get',//데이터 전송방식 get/post
+		  data:'id='+$('input[name=id]').val(),
+		  dataType:'text',//반환받을 데이터 타입 
+		  beforeSend:function(){},
+		  success:function(txt){//호출 성공해서 완료하면 
+			alert("입력완료되었습니다.");
+		},
+		complete:function(){
+			
+		} 
+		
+	    })
+	    
+	}else{
+		alert("탈퇴를 취소합니다.")
+		return false;
+	}
+	alert("탈퇴되었습니다.")
+	
+	window.location.reload();
+	
+	
+	
+})
+
+ $(document)
+.on('click','#edit',function(){
+	var c2 = confirm("정말 이 회원의 정보를 수정하시겠습니까?")
+	if(c2==true){
+	$.ajax({
+		  url:'editpage',//호출될 서블릿의 경로(이름)
+		  method:'get',//데이터 전송방식 get/post
+		  data:'id='+$('input[name=id]').val()+'&password='+$('input[name=password]').val()+'&mobile='+$('input[name=mobile]').val()+'&name='+$('input[name=name]').val()+'&email='+$('input[name=email]').val(),
+		  dataType:'text',//반환받을 데이터 타입 
+		  beforeSend:function(){},
+		  success:function(txt){//호출 성공해서 완료하면 
+		
+		},
+		complete:function(){
+			
+		} 
+		
+	    })
+	   
+	}else{
+		alert("이 회원의 정보 수정을 취소합니다.")
+		return false;
+	}			
+		alert("이 회원의 정보를 수정하였습니다.")
+	    window.location.reload();
+		return false;
+	  })
+
+
+
+	    
+
+
+
+
+</script>
